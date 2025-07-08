@@ -32,15 +32,9 @@ const lawyerSchema = new mongoose.Schema({
     default: 0,
     min: 0
   },
-  location: {
-    city:{
-        type:String,
-        required:true
-    },
-    state:{
-        type:String,
-        required:true
-    }
+  address:{
+    type:String,
+    required:true
   },
   image: {
     type: String,
@@ -59,6 +53,9 @@ const lawyerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  firmName:{
+    type:String
+  },
   availability: {
     type: String,
     enum: ['Available Today', 'Unavailable', 'Busy', 'On Leave'], // customize as needed
@@ -67,6 +64,10 @@ const lawyerSchema = new mongoose.Schema({
   proBono: {
     type: Boolean,
     default: false
+  },
+  licenseNumber:{
+    type:Number,
+    required:true
   },
   verified: {
     type: Boolean,
