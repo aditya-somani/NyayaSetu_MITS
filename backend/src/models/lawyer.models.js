@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs"
 
 const {Schema} =mongoose;
 
-const mongoose = require('mongoose');
+
 
 const lawyerSchema = new mongoose.Schema({
   name: {
@@ -77,7 +77,7 @@ const lawyerSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Lawyer', lawyerSchema);
+
 
 
 lawyerSchema.pre("save",async function(next){

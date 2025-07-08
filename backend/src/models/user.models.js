@@ -31,7 +31,7 @@ const UserSchema = new mongoose.Schema({
     required:true
   },
   address:{
-    type:string,
+    type:String,
     required:true
   },
   idProof: String,
