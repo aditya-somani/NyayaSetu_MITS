@@ -1,0 +1,33 @@
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import cors from 'cors';
+
+const app = express();
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(cors({
+  origin: "http://localhost:8080", // ✅ your frontend URL
+  credentials: true,               // ✅ important!
+}));
+app.use(express.static('public'))
+app.use(cookieParser())
+
+
+
+import ticketRoutes from './routers/ticket.routes.js'
+import userRoutes   from  './routers/user.routes.js'
+import workerRoutes from './routers/worker.routes.js'
+import lawyerRoutes from  './routers/lawyer.routes.js'
+import adminRoutes  from  './routers/admin.routes.js'
+
+app.use("/ticket",ticketRoutes)
+app.use("/user",userRoutes)
+app.use("/admin",adminRoutes)
+app.use("/worker",workerRoutes)
+app.use("/lawyer",lawyerRoutes)
+
+
+export default app 
+
+
