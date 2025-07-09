@@ -54,6 +54,10 @@ const ticketSchema = new Schema({
     },
     userType:{
         type:String
+    },
+    complaintNo:{
+        type:String,
+        required:true
     }
 
 }, {

@@ -26,7 +26,7 @@ Complaint: "There has been no water supply in my area for the past 24 hours."
 
 Output:
 { priority3 : High }
-
+ and keep in mind don;t give any other output except { priority3 : High } ,{ priority2 : Medium },{ priority1 : Low }
 Here are the details you have access to: ${details}
 `;
 

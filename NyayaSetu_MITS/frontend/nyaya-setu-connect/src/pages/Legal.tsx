@@ -1,10 +1,13 @@
 
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import axios from 'axios';
+import PaymentModal from '@/components/PaymentModal';
+import Cookies from "js-cookie";
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { 
   Scale, 
@@ -27,9 +30,31 @@ import Navbar from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 
 const Legal = () => {
+  const[Authenticate ,setIsAuthenticated]=useState(false)
+
+  useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/auth/check", {
+        withCredentials: true // ✅ very important for sending cookies
+      });
+      console.log("User is authenticated:", res.data);
+      setIsAuthenticated(true);
+    } catch (err) {
+      console.log("User not authenticated");
+      setIsAuthenticated(false);
+    }
+  };
+
+  checkAuth();
+}, []);
+
   const { toast } = useToast();
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+const [selectedLawyer, setSelectedLawyer] = useState<any>(null);
   const [selectedSpeciality, setSelectedSpeciality] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  let [lawyers,setLawyers]=useState([]);
 
   const specialities = [
     { id: 'all', name: 'All Lawyers', count: 150 },
@@ -40,79 +65,68 @@ const Legal = () => {
     { id: 'constitutional', name: 'Constitutional Law', count: 20 }
   ];
 
-  const lawyers = [
-    {
-      id: 1,
-      name: 'Adv. Rajesh Sharma',
-      speciality: 'Civil Law',
-      experience: 15,
-      rating: 4.8,
-      reviews: 124,
-      location: 'New Delhi',
-      image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400',
-      consultationFee: 1500,
-      languages: ['Hindi', 'English'],
-      education: 'LLB, Delhi University',
-      availability: 'Available Today',
-      proBono: true,
-      verified: true
-    },
-    {
-      id: 2,
-      name: 'Adv. Priya Mehta',
-      speciality: 'Consumer Rights',
-      experience: 12,
-      rating: 4.9,
-      reviews: 98,
-      location: 'Mumbai',
-      image: 'https://images.unsplash.com/photo-1594824911330-20e84705b55f?w=400',
-      consultationFee: 1200,
-      languages: ['Hindi', 'English', 'Marathi'],
-      education: 'LLM, Mumbai University',
-      availability: 'Available Tomorrow',
-      proBono: false,
-      verified: true
-    },
-    {
-      id: 3,
-      name: 'Adv. Suresh Kumar',
-      speciality: 'Criminal Law',
-      experience: 20,
-      rating: 4.7,
-      reviews: 156,
-      location: 'Bangalore',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400',
-      consultationFee: 2000,
-      languages: ['Hindi', 'English', 'Kannada'],
-      education: 'LLB, Bangalore University',
-      availability: 'Busy Today',
-      proBono: true,
-      verified: true
-    },
-    {
-      id: 4,
-      name: 'Adv. Kavita Singh',
-      speciality: 'Labor Law',
-      experience: 10,
-      rating: 4.6,
-      reviews: 87,
-      location: 'Chennai',
-      image: 'https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=400',
-      consultationFee: 1000,
-      languages: ['Hindi', 'English', 'Tamil'],
-      education: 'LLM, Chennai Law College',
-      availability: 'Available Today',
-      proBono: true,
-      verified: true
-    }
-  ];
 
-  const handleBookConsultation = (lawyer: any) => {
+const [showLawyerInfo, setShowLawyerInfo] = useState(false);
+
+const handleInstaConnect = () => {
+  if (lawyers.length > 0) {
+    const randomLawyer = lawyers[Math.floor(Math.random() * lawyers.length)];
+    setSelectedLawyer(randomLawyer);
+    setShowLawyerInfo(true);
     toast({
-      title: "Consultation Booking",
-      description: `Booking consultation with ${lawyer.name}. You will be redirected to payment.`,
+      title: "InstaConnect",
+      description: `Your InstaConnect lawyer is ${randomLawyer.name}!`,
     });
+
+    // Delay showing the payment modal by 5 seconds
+    setTimeout(() => {
+      setShowLawyerInfo(false);
+      setIsPaymentOpen(true);
+    }, 3000);
+  } else {
+    toast({
+      title: "No Lawyers Available",
+      description: "No lawyers are currently available for InstaConnect.",
+      variant: "destructive",
+    });
+  }
+};
+
+  
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/lawyer/allLawyers',{withCredentials:true});
+        setLawyers(response.data);  // ✅ store data in state
+      } catch (error) {
+        console.error("Error fetching lawyer data:", error);
+      }
+    };
+
+    getData(); // ✅ call inside useEffect
+  }, []); // empty dependency array = run once on mount
+
+
+  const handleBookConsultation = async (lawyer: any) => {
+    if(Authenticate){
+    const result =await axios.get(`http://localhost:5000/call/initiateCall/${lawyer._id}`,{withCredentials:true})
+    console.log(result);
+     setSelectedLawyer(lawyer);
+    setIsPaymentOpen(true);
+    
+    if(result.status==200){
+      toast({
+      title: "Consultation Booking",
+      description: `Booking consultation with ${lawyer.name}.  Redirecting to call....`,
+    });
+    }
+  }else{
+     return toast({title:"LoggedIn",description:"You must be logged in to connect with a lawyer.",variant: "destructive"})
+  }
   };
+
+ 
 
   const filteredLawyers = lawyers.filter(lawyer => {
     const matchesSpeciality = selectedSpeciality === 'all' || 
@@ -122,10 +136,24 @@ const Legal = () => {
     return matchesSpeciality && matchesSearch;
   });
 
+  const handleClosePayment = () => {
+    setIsPaymentOpen(false);
+    setSelectedLawyer(null);
+  };
+   
   return (
+   
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <Navbar />
-      
+      {selectedLawyer && (
+        <PaymentModal
+          isOpen={isPaymentOpen}
+          onClose={handleClosePayment}
+          amount={selectedLawyer.consultationFee}
+          description={`Consultation with ${selectedLawyer.name}`}
+          serviceType={selectedLawyer.speciality}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -174,6 +202,62 @@ const Legal = () => {
               </motion.div>
             ))}
           </motion.div>
+
+<motion.div
+  initial={{ y: 20, opacity: 0 }}
+  animate={{ y: 0, opacity: 1 }}
+  transition={{ duration: 0.6, delay: 0.2 }}
+  className="flex flex-col items-center justify-center mb-8"
+>
+  <motion.button
+    whileHover={{ scale: 1.07, boxShadow: "0 0 16px #6366f1" }}
+    whileTap={{ scale: 0.97 }}
+    className="relative flex flex-col items-center justify-center px-4 py-3 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 shadow-lg text-white font-bold transition-all duration-300 outline-none border-0 overflow-hidden min-w-[140px] min-h-[70px]"
+    onClick={handleInstaConnect}
+  >
+    <span className="absolute top-0 left-0 w-full h-full pointer-events-none">
+      <span className="block w-full h-full bg-gradient-to-r from-white/30 via-transparent to-white/10 animate-shine rounded-xl" />
+    </span>
+
+    <div className="z-10 flex flex-col items-center gap-0.5">
+      <Scale className="w-4 h-4" />
+      <span>InstaConnect</span>
+      <span className="text-xs font-normal text-white/80">
+        Connect instantly, solve problems!
+      </span>
+    </div>
+  </motion.button>
+
+  <style>
+    {`
+      @keyframes shine {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+      }
+      .animate-shine {
+        animation: shine 2s linear infinite;
+        opacity: 0.5;
+      }
+    `}
+  </style>
+
+  {/* Show selected InstaConnect lawyer for 5 sec */}
+  {selectedLawyer && showLawyerInfo && (
+    <div className="flex flex-col items-center mt-4 transition-all">
+      <Avatar className="w-14 h-14 mb-2">
+        <AvatarImage src={selectedLawyer.image} alt={selectedLawyer.name} />
+        <AvatarFallback>
+          {selectedLawyer.name
+            .split(' ')
+            .map((n: string) => n[0])
+            .join('')}
+        </AvatarFallback>
+      </Avatar>
+      <span className="font-semibold text-indigo-700">{selectedLawyer.name}</span>
+    </div>
+  )}
+</motion.div>
+
 
           {/* Filters */}
           <motion.div
@@ -227,7 +311,7 @@ const Legal = () => {
           >
             {filteredLawyers.map((lawyer, index) => (
               <motion.div
-                key={lawyer.id}
+                key={lawyer._id}
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -329,7 +413,7 @@ const Legal = () => {
                         className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 flex items-center space-x-1"
                       >
                         <Video className="w-4 h-4" />
-                        <span>Book</span>
+                         <span>Book</span>
                       </Button>
                     </div>
                   </CardContent>

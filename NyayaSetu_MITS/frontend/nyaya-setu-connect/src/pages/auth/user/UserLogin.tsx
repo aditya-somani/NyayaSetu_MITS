@@ -5,20 +5,32 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 const UserLogin = () => {
+   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+   const navigate = useNavigate();
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
+    const result=await axios.post('http://localhost:5000/user/login',formData,{withCredentials:true})
     console.log('User login:', formData);
+    navigate('/')
+    toast({
+        title: "User Registered!",
+        description: "Welcome Back User"
+      });
   };
 
   const containerVariants = {

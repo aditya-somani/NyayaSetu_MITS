@@ -1,4 +1,3 @@
-
 import { useState,useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -33,14 +32,51 @@ import {  Bus, Shield, Flame, Leaf, Tractor, Banknote, Users } from 'lucide-reac
 import Navbar from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 
-
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
 const Complaints = () => {
-
-
-  
   const { toast } = useToast();
+  const[Authenticate ,setIsAuthenticated]=useState(false)
+
+  useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/auth/check", {
+        withCredentials: true // ✅ very important for sending cookies
+      });
+      console.log("User is authenticated:", res.data);
+      setIsAuthenticated(true);
+    } catch (err) {
+      console.log("User not authenticated");
+      setIsAuthenticated(false);
+    }
+  };
+
+  checkAuth();
+}, []);
+
+  // Track Complaint State
+  const [trackNo, setTrackNo] = useState("");
+  const [trackResult, setTrackResult] = useState<any>(null);
+  const [trackError, setTrackError] = useState("");
+  const [trackLoading, setTrackLoading] = useState(false);
+
+  const handleTrackComplaint = async () => {
+    setTrackError("");
+    setTrackResult(null);
+    setTrackLoading(true);
+    try {
+      const res = await axios.get(`http://localhost:5000/ticket/track/${trackNo}`);    
+      setTrackResult(res.data[0]);
+    } catch (err) {
+      setTrackError("Complaint not found. Please check the number and try again.");
+    } finally {
+      setTrackLoading(false);
+    }
+  };
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [formData, setFormData] = useState({
     title: '',
@@ -54,6 +90,7 @@ const Complaints = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
  const categories = [
+
   { 
     id: 'railway', 
     name: 'Railway Services', 
@@ -152,25 +189,11 @@ const Complaints = () => {
   }
 ];
 
-
-  const priorities = [
-    { value: 'low', label: 'Low', color: 'bg-green-100 text-green-800' },
-    { value: 'medium', label: 'Medium', color: 'bg-yellow-100 text-yellow-800' },
-    { value: 'high', label: 'High', color: 'bg-red-100 text-red-800' },
-    { value: 'urgent', label: 'Urgent', color: 'bg-red-200 text-red-900' }
-  ];
-
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-  };
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files || []);
-    // Handle file upload logic here
-    console.log('Files uploaded:', files);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -180,12 +203,11 @@ const Complaints = () => {
     try {
       // Simulate API call
       console.log("DATA");
-      
-      await axios.post('http://localhost:5000/ticket/create',formData,{withCredentials:true})
-      
+      const complaintdetail=Math.random().toString(36).substr(2, 6).toUpperCase()
+      await axios.post('http://localhost:5000/ticket/create',{formData,complaintdetail},{withCredentials:true})
       toast({
         title: "Complaint Submitted Successfully!",
-        description: "Your complaint has been registered. Tracking ID: NYC" + Math.random().toString(36).substr(2, 6).toUpperCase(),
+        description: "Your complaint has been registered. Tracking ID: " + complaintdetail,
       });
 
       // Reset form
@@ -221,6 +243,89 @@ const Complaints = () => {
         className="pt-20 px-4 sm:px-6 lg:px-8"
       >
         <div className="max-w-4xl mx-auto">
+
+          {/* Track Complaint Bar */}
+          <Card className="w-full max-w-xl mx-auto mb-8">
+            <CardHeader>
+              <CardTitle>Track Your Complaint</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-2 mb-4">
+                <Input
+                  placeholder="Enter Complaint Number"
+                  value={trackNo}
+                  onChange={(e) => setTrackNo(e.target.value)}
+                />
+                <Button onClick={handleTrackComplaint} disabled={trackLoading}>
+                  {trackLoading ? (
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    "Search"
+                  )}
+                </Button>
+              </div>
+              {trackError && (
+  <div className="text-red-600 font-medium text-sm bg-red-50 border border-red-200 rounded-md p-3 mb-4">
+    ⚠️ {trackError}
+  </div>
+)}
+
+{trackResult && (
+  <div className="space-y-3 bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+    <h2 className="text-lg font-semibold text-blue-600 mb-2">📋 Complaint Details</h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+      <div>
+        <span className="font-semibold text-gray-900">Title:</span><br />
+        {trackResult.title}
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Status:</span><br />
+        <span className={`px-2 py-1 rounded-full text-white text-xs font-semibold 
+          ${trackResult.status === 'resolved' ? 'bg-green-500' : 'bg-yellow-500'}`}>
+          {trackResult.status}
+        </span>
+      </div>
+
+      <div className="md:col-span-2">
+        <span className="font-semibold text-gray-900">Description:</span><br />
+        <p className="text-gray-600 mt-1">{trackResult.description}</p>
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Priority:</span><br />
+        <span className="inline-block bg-red-100 text-red-700 text-xs font-medium px-2 py-1 rounded">
+          {trackResult.priority}
+        </span>
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Category:</span><br />
+        {trackResult.category}
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Location:</span><br />
+        {trackResult.location.city}, {trackResult.location.state}
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Created On:</span><br />
+        {dayjs(trackResult.createdAt).format("DD MMM YYYY, h:mm A")}
+      </div>
+
+      <div>
+        <span className="font-semibold text-gray-900">Time Since:</span><br />
+        {dayjs(trackResult.createdAt).fromNow()}
+      </div>
+    </div>
+  </div>
+)}
+
+            </CardContent>
+          </Card>
+
           {/* Header */}
           <motion.div
             initial={{ y: -20, opacity: 0 }}
@@ -233,6 +338,12 @@ const Complaints = () => {
               Report your concerns about government services. We'll ensure they reach the right department for prompt resolution.
             </p>
           </motion.div>
+
+          {!Authenticate && (
+  <div className="text-center mt-6 text-red-600 text-lg font-semibold">
+    LogIn to Track Your Complaint
+  </div>
+)}
 
           {/* Category Selection */}
           <motion.div
@@ -389,34 +500,7 @@ const Complaints = () => {
                       </div>
                     </div>
 
-                    {/* File Upload */}
-                    {/* <div>
-                      <Label className="text-sm font-medium text-gray-700 mb-2 block">
-                        Supporting Documents (Optional)
-                      </Label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                        <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-600 mb-2">
-                          Drag and drop files here, or click to browse
-                        </p>
-                        <p className="text-sm text-gray-500 mb-4">
-                          Supported formats: JPG, PNG, PDF, DOC (Max 10MB each)
-                        </p>
-                        <Input
-                          type="file"
-                          multiple
-                          accept=".jpg,.jpeg,.png,.pdf,.doc,.docx"
-                          onChange={handleFileUpload}
-                          className="hidden"
-                          id="file-upload"
-                        />
-                        <Label htmlFor="file-upload">
-                          <Button type="button" variant="outline" className="cursor-pointer">
-                            Choose Files
-                          </Button>
-                        </Label>
-                      </div>
-                    </div> */}
+                   
 
                     {/* Important Notice */}
                     <motion.div

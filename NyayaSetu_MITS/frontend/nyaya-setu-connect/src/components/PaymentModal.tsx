@@ -1,18 +1,21 @@
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { 
-  CreditCard, 
-  Wallet, 
-  Building, 
+import {
+  CreditCard,
+  Wallet,
+  Building,
   IndianRupee,
   Lock,
-  CheckCircle,
-  X
+  CheckCircle
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,10 +27,19 @@ interface PaymentModalProps {
   serviceType: string;
 }
 
-const PaymentModal = ({ isOpen, onClose, amount, description, serviceType }: PaymentModalProps) => {
+const PaymentModal = ({
+  isOpen,
+  onClose,
+  amount,
+  description,
+  serviceType
+}: PaymentModalProps) => {
   const { toast } = useToast();
   const [selectedMethod, setSelectedMethod] = useState('razorpay');
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // 👇 Hardcoded phone number
+  const hardcodedPhone = "1800114000";
 
   const paymentMethods = [
     {
@@ -57,55 +69,20 @@ const PaymentModal = ({ isOpen, onClose, amount, description, serviceType }: Pay
     setIsProcessing(true);
 
     try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-      // In a real implementation, you would:
-      // 1. Create order on your backend
-      // 2. Initialize Razorpay with order details
-      // 3. Handle payment success/failure
-
-      // Mock Razorpay integration
-      const options = {
-        key: 'YOUR_RAZORPAY_KEY_ID', // Replace with actual key
-        amount: amount * 100, // Amount in paise
-        currency: 'INR',
-        name: 'NyayaSetu',
-        description: description,
-        image: '/logo.png',
-        order_id: 'order_' + Math.random().toString(36).substr(2, 9),
-        handler: function (response: any) {
-          toast({
-            title: "Payment Successful!",
-            description: `Payment ID: ${response.razorpay_payment_id}`,
-          });
-          onClose();
-        },
-        prefill: {
-          name: 'User Name',
-          email: 'user@example.com',
-          contact: '9999999999'
-        },
-        theme: {
-          color: '#3B82F6'
-        }
-      };
-
-      // This would normally initialize Razorpay
-      // const rzp = new window.Razorpay(options);
-      // rzp.open();
-
-      // For demo purposes, simulate success
       toast({
         title: "Payment Successful!",
         description: `₹${amount} paid for ${serviceType}`,
       });
-      onClose();
+
+      // 👇 Redirect to phone call
+      window.location.href = `tel:${hardcodedPhone}`;
 
     } catch (error) {
       toast({
         title: "Payment Failed",
-        description: "Please try again or contact support",
+        description: "Please try again or contact support.",
         variant: "destructive"
       });
     } finally {
@@ -138,7 +115,6 @@ const PaymentModal = ({ isOpen, onClose, amount, description, serviceType }: Pay
               <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="font-semibold text-gray-900 mb-2">{serviceType}</h3>
                 <p className="text-sm text-gray-600 mb-3">{description}</p>
-                
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-bold text-gray-900">Total Amount:</span>
                   <span className="text-2xl font-bold text-green-600 flex items-center">
@@ -165,9 +141,11 @@ const PaymentModal = ({ isOpen, onClose, amount, description, serviceType }: Pay
                       onClick={() => setSelectedMethod(method.id)}
                     >
                       <div className="flex items-center space-x-3">
-                        <method.icon className={`w-5 h-5 ${
-                          selectedMethod === method.id ? 'text-blue-600' : 'text-gray-400'
-                        }`} />
+                        <method.icon
+                          className={`w-5 h-5 ${
+                            selectedMethod === method.id ? 'text-blue-600' : 'text-gray-400'
+                          }`}
+                        />
                         <div className="flex-1">
                           <div className="flex items-center space-x-2">
                             <span className="font-medium">{method.name}</span>
@@ -200,27 +178,28 @@ const PaymentModal = ({ isOpen, onClose, amount, description, serviceType }: Pay
 
               {/* Action Buttons */}
               <div className="flex space-x-3">
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   onClick={onClose}
                   className="flex-1"
                   disabled={isProcessing}
                 >
                   Cancel
                 </Button>
-                <Button 
+
+                <Button
                   onClick={handlePayment}
                   disabled={isProcessing}
                   className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 >
                   {isProcessing ? (
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center justify-center space-x-2">
                       <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                       <span>Processing...</span>
                     </div>
                   ) : (
                     <div className="flex items-center space-x-2">
-                      <IndianRupee className="w-4 h-4" />
+                      <IndianRupee className="w-5 h-4" />
                       <span>Pay ₹{amount}</span>
                     </div>
                   )}

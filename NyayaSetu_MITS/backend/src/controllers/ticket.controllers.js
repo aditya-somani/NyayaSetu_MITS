@@ -1,3 +1,4 @@
+import { log } from "console";
 import Ticket from "../models/ticket.models.js";
 import User from "../models/user.models.js";
 import { allocatePriority } from "../utils/sentiment.js";
@@ -14,9 +15,6 @@ const createTicket = async (req, res) => {
         var userType = 'anonymous';
         var owner = '64b7f294f1a2c1aaf0c2e76b';
     }
-
-
-        
         const {
             title,
             description,
@@ -25,10 +23,14 @@ const createTicket = async (req, res) => {
             state,
             category,
             contactNumber
-        } = req.body;
+        } = req.body.formData;
 
+         const complaintNo=req.body.complaintdetail
         const sentiment=await allocatePriority(description)
+        console.log(sentiment);
+        
         const priority=sentiment?.reason.split(" ")[3]
+
         const ticketData = {
             title,
             description,
@@ -38,17 +40,15 @@ const createTicket = async (req, res) => {
             category,
             priority,
             userType,
-            owner:owner
+            owner:owner,
+            complaintNo
         };
 
         const ticket = new Ticket(ticketData);
         await ticket.save();
         console.log("Ticket Created Successfully");
         
-        if(req.userId!='anonymous'){
-        const user = await User.findById(userId).select('name email');
-        await generateAndSendComplaintPDF(user, ticket);
-        }
+        
 
         return res.status(201).json({
             message: "Ticket created successfully and PDF emailed if loggedin.",
@@ -60,19 +60,23 @@ const createTicket = async (req, res) => {
     }
 };
 
-const getUserTickets = async (req, res) => {
+
+
+const trackComplaint=async(req,res)=>{
     try {
-        const userId = req.userId;
+        const trackNo=req.params.trackNo
+        console.log(trackNo);
+        
 
-        const tickets = await Ticket.find({ owner: userId });
+        const result=await Ticket.find({
+            complaintNo:trackNo
+        })
 
-        return res.status(200).json({
-            message: "Tickets fetched successfully",
-            tickets,
-        });
+        console.log(result);
+        return res.json(result)
     } catch (error) {
-        return res.status(500).json({ message: "Error fetching tickets", error });
+        return res.json("Cannot Find Complaint",error)
     }
-};
+}
 
-export { createTicket, getUserTickets };
+export { createTicket, trackComplaint };

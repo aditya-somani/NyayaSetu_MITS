@@ -18,7 +18,7 @@ import LawyerRegister from "./pages/auth/lawyer/LawyerRegister";
 import EmployeeLogin from "./pages/auth/employee/EmployeeLogin";
 import AdminLogin from "./pages/auth/admin/AdminLogin";
 import NotFound from "./pages/NotFound";
-import Chatbot from "./components/Chatbot";
+import PaymentModal from "./components/PaymentModal";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +37,18 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          <Route
+  path="/pay/payment"
+  element={
+    <PaymentModal
+      isOpen={true}
+      onClose={() => {}}
+      amount={100}
+      description="Test payment"
+      serviceType="Consultation"
+    />
+  }
+/>
           <Route path="/" element={<Index />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/complaints" element={<Complaints />} />
@@ -67,7 +79,7 @@ const App = () => (
         </Routes>
         
         {/* Global Chatbot - appears on every page */}
-        <Chatbot />
+        
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

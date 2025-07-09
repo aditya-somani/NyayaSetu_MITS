@@ -25,8 +25,7 @@ const Navbar = () => {
     { name: 'Home', href: '/', icon: Scale },
     { name: 'Dashboard', href: '/dashboard', icon: User },
     { name: 'Complaints', href: '/complaints', icon: FileText },
-    { name: 'Legal Help', href: '/legal', icon: Scale },
-    { name: 'Contact', href: '/contact', icon: Phone },
+    { name: 'Legal Help', href: '/legal', icon: Scale }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -126,7 +125,7 @@ const Navbar = () => {
             {isHomePage && (
               <Badge className="px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30 hover:bg-blue-500/30">
                 <Sparkles className="w-3 h-3 mr-1" />
-                Beta
+                <a target='blank' href="https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS">Talk to Setu</a>
               </Badge>
             )}
             <Link to="/auth">
@@ -213,7 +212,7 @@ const Navbar = () => {
                 {isHomePage && (
                   <Badge className="mb-2 px-3 py-1 bg-blue-500/20 text-blue-300 border-blue-500/30">
                     <Sparkles className="w-3 h-3 mr-1" />
-                    Beta Version
+                   <a target='blank' href="https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS">Talk to Setu</a>
                   </Badge>
                 )}
                 <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
