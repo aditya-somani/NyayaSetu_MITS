@@ -22,10 +22,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 
-app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.originalUrl} - Origin: ${req.headers.origin}`);
-  next();
-});
+
 
 
 import ticketRoutes from './routers/ticket.routes.js';
