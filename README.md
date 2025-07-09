@@ -1,140 +1,137 @@
-## Nyayasetu: Revolutionizing Governance with Data-Driven Legal Ecosystems
+Of course! Here is a rewritten and improved version of your README file, complete with better formatting and placeholders for your videos and presentation.
 
-*The bot is live at* : https://huggingface.co/spaces/AdiSomani123/NyayaSetu-Legal-Assistant
+# Nyayasetu: Revolutionizing Governance with a Data-Driven Legal Ecosystem
 
+*Nyayasetu is a comprehensive data platform designed to transform governance in India by turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policymaking.*
 
-### Executive Summary
+**The Site is live at:** 
 
-Nyayasetu is a comprehensive data collection platform designed to transform governance in India by building an integrated legal ecosystem. Our platform addresses the critical data bottleneck faced by government authorities, turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policy making. By combining complaint management, AI-powered citizen assistance, and legal service connections, Nyayasetu empowers both citizens and authorities to create a smarter, more responsive government.
+**The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
-## Steps to Run the Project
+## 🎥 Demos & Presentation
 
-1. *Clone the Repository*
-   bash
-   git clone https://github.com/Atulkhiyani0909/NyayaSetu.git
-   cd 
-   
+-**Video Link to Site Demo(Drive):** [**View the Video**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
 
-2. *Install Dependencies*
-   - Navigate to the frontend directory and install dependencies:
-     bash
-     cd frontend
-     npm install
-     
-   - Navigate to the backend directory and install dependencies:
-     bash
-     cd ../backend
-     npm install
-     
+-**Video Link to Bot Mockup(Drive)** [**View the Video**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
 
-3. *Start the Development Servers*
-   - In both the frontend and backend directories, start the servers using:
-     bash
-     npm run dev
-     
-   - This will start the Vite-powered frontend and the backend server. Vite will provide a local development link (usually http://localhost:5173 for frontend).
-     (usually http://localhost:8080 for backend)
+-**Check out our presentation(Slides):** [**View the Slides**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
 
-4. *Access the Application*
-   - Open your browser and go to the link provided by Vite (typically http://localhost:5173) to use the platform.
+## 📜 Table of Contents
 
-*Note:*  
-- Make sure you have [Node.js](https://nodejs.org/) installed on your system.
-- Ensure any required environment variables are set up as described in the .env.example files.
-- For any issues, refer to the troubleshooting section or contact the maintainers.
+- [The Problem](#-the-problem)
+- [Our Solution](#-our-solution)
+- [How It Works](#-how-it-works-the-governance-intelligence-flywheel)
+- [Key Features](#-key-features)
+- [Technology Stack](#-technology-stack)
+- [Getting Started](#-getting-started)
+- [Impact](#-impact)
+- [Our Team](#-our-team)
+- [Contact](#-contact)
 
-This streamlined process will get your project up and running in just a few steps!
+## 🎯 The Problem
 
-## Table of Contents
-
-- Introduction
-- Problem Statement
-- Solution Overview
-- How It Works
-- Key Features
-- Impact
-- Team
-- Contact
-
-### Introduction
-
-> **What’s one difference between government and private institutions that separates their decision-making? DATA.**
->
-> "Government decisions today are made in the dark. While businesses use data to optimize everything, our governments lack the citizen data needed to predict problems, allocate resources, and prevent issues before they escalate."
-
-### Problem Statement
+> "What’s one difference between government and private institutions that separates their decision-making? **DATA.** Government decisions today are made in the dark. While businesses use data to optimize everything, our governments lack the citizen data needed to predict problems, allocate resources, and prevent issues before they escalate."
 
 Governance in India faces three critical challenges:
+*   **Data Scarcity**: Governments often operate with fragmented and incomplete information about citizen needs, unlike private companies that leverage data for optimization.
+*   **Service Fragmentation**: Citizens must navigate a complex maze of different complaint systems, information portals, and service providers, often leading to confusion and bureaucracy.
+*   **Reactive Governance**: Without comprehensive data, authorities can only respond to problems after they become crises—repairing roads after accidents, adding staff after long queues, or addressing legal issues after they have multiplied.
 
-- **Data Scarcity:** Unlike private companies that use analytics to optimize everything from traffic flow to service delivery, governments operate with fragmented, incomplete information about citizen needs.
-- **Service Fragmentation:** Citizens are forced to navigate a maze of different complaint systems, information portals, and service providers, often getting lost in bureaucracy.
-- **Reactive Governance:** Without comprehensive data, governments can only respond to problems after they become crises—repairing roads after accidents, adding staff after long queues, addressing legal issues after they multiply.
+**The result?** Citizens lose time and money, struggle to verify rules or file complaints, and find legal help to be costly and inaccessible.
 
-**The Result:**  
-Citizens lose time and money dealing with unfair practices, there’s no easy way to verify rules or file complaints, and legal help remains costly and out of reach for most people.
+## ✨ Our Solution
 
-### Solution Overview
+Nyayasetu creates India's first **integrated legal ecosystem** that transforms everyday citizen interactions into governance intelligence. Our platform offers a unified solution to these challenges.
 
-Nyayasetu creates India's first integrated legal ecosystem that transforms citizen interactions into governance intelligence.
+*   **User-Friendly Complaint Portal**: A centralized hub for all government service issues. Citizens can report problems in seconds, track resolutions in real-time, and rate their experience. Each complaint becomes a valuable data point, tagged by location, service type, and resolution time.
+*   **AI-Powered RAG Chatbot**: Provides instant, accurate answers in multiple languages. The AI uses intelligent follow-up questions to uncover deeper insights and patterns that traditional forms would miss.
+*   **Comprehensive Lawyer Marketplace**: Connects citizens with legal help based on their specific needs or for urgent matters. The platform tracks legal service demand, highlighting where and when certain services are most needed.
 
-#### Our Platform Offers:
+> **The magic is in the integration.** These are not separate services. Every interaction, query, and service request contributes to a unified ecosystem, creating a comprehensive understanding of citizen needs.
 
-- **User-Friendly Complaint Portal:** Centralizes all government service issues. Citizens can report problems in seconds, track resolution in real-time, and rate their experience. Every complaint becomes a data point tagged by location, service type, and resolution time.
+## ⚙️ How It Works: The Governance Intelligence Flywheel
 
-  ![image](https://github.com/user-attachments/assets/ef0cc296-c396-45af-a478-78438a46cf5e)
+1.  **Citizen Interaction**: Citizens engage with the platform through the complaint portal, AI chatbot, or by seeking legal assistance.
+2.  **Unified Data Collection**: Every interaction is captured and structured, recording the nature of the problem, its location, and the individuals affected.
+3.  **Predictive Analytics & Inference**: Interactive dashboards provide government authorities with valuable insights from the collected data. (Full automation with predictive models is planned as more data is gathered.)
+4.  **Proactive Governance**: Authorities receive actionable intelligence, enabling evidence-based decisions, proactive resource allocation, and effective crisis prevention.
 
-- **AI-Powered RAG Chatbot:** Provides instant, accurate answers in multiple languages. The AI probes deeper through intelligent follow-up questions, revealing patterns traditional forms miss.
+## 🚀 Key Features
 
-  ![image](https://github.com/user-attachments/assets/38fe17c6-3497-4855-89f4-d145bbaa9491)
+| Feature | Description |
+| :--- | :--- |
+| **Advanced RAG Chatbot** | Provides instant, multilingual support and gathers deep contextual data. |
+| **Smart Ticketing System** | Manages, tracks, and analyzes citizen complaints and queries efficiently. |
+| **Legal Support Platform** | Connects citizens with lawyers and provides insights into legal needs. |
+| **Analytics Dashboard** | Offers AI-driven insights for authorities to make data-informed decisions. |
 
-- **Comprehensive Lawyer Marketplace:** Citizens can find legal help based on their specific needs or connect instantly for urgent matters. The platform tracks which legal services are in highest demand, where, and when.
+## 💻 Technology Stack
 
-  ![image](https://github.com/user-attachments/assets/e17caabc-d5f9-4fa2-8f01-68699e3fde96)
+| Category | Technologies |
+| :--- | :--- |
+| **Frontend** | React, Vite, Chart.js/Recharts |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB, Mongoose (ODM) |
+| **AI & ML** | LangChain, VectorDB, Gemini |
+| **File Storage**| Multer |
 
+## 🛠️ Getting Started
 
-> **The Magic:** These aren’t separate services. Every interaction, query, and service request contributes to a comprehensive understanding of citizen needs in a unified ecosystem.
+Follow these steps to get a local copy up and running.
 
-### How It Works: The Governance Intelligence Flywheel
+### Prerequisites
+*   [Node.js](https://nodejs.org/) (LTS version recommended)
+*   `npm` (comes with Node.js)
+*   `git`
 
-1. **Citizen Interaction:**  
-   Citizens engage via complaint portal, AI chatbot, or by seeking legal help.
+### Installation
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/Atulkhiyani0909/NyayaSetu.git
+    cd NyayaSetu
+    ```
+2.  **Install Backend Dependencies:**
+    ```sh
+    cd backend
+    npm install
+    ```
+3.  **Install Frontend Dependencies:**
+    ```sh
+    cd ../frontend
+    npm install
+    ```
+4.  **Set up Environment Variables:**
+    *   In both the `frontend` and `backend` directories, rename `.env.example` to `.env`.
+    *   Fill in the required environment variables as described in the files.
+5.  **Run the Development Servers:**
+    *   **Backend**: In the `/backend` directory, run:
+        ```sh
+        npm run dev
+        ```
+        The backend server will typically start on `http://localhost:8080`.
+    *   **Frontend**: In the `/frontend` directory, run:
+        ```sh
+        npm run dev
+        ```
+        The Vite development server will start, usually at `http://localhost:5173`.
+6.  **Access the Application:**
+    Open your browser and navigate to the frontend URL (e.g., `http://localhost:5173`) to use the platform.
 
-2. **Unified Data Collection:**  
-   Every interaction is captured and structured, recording the problem, location, and affected individuals.
+## 📈 Impact
 
-3. **Predictive Analytics & Inference:**  
-   Interactive dashboards help government authorities derive valuable insights from the data. (Full automation with predictive models is planned as more data becomes available.)
+*   **Reduces corruption** by promoting transparency and direct citizen engagement.
+*   **Saves time and money** for both citizens and government officials.
+*   **Boosts efficiency and trust** in government services.
+*   **Creates a feedback loop** that continuously improves governance.
 
-4. **Proactive Governance:**  
-   Authorities receive actionable insights, enabling evidence-based decisions, proactive resource allocation, and crisis prevention.
+## 🤝 Our Team
 
-### Key Features
+*   **Aditya Somani** – AI Engineer | Developed the Advanced RAG chatbot and data extraction pipeline.
+*   **Annepu Pawan Kumar** & **Atul Khiyani** – Full-Stack Developers | Crafted the entire website, backend logic, and user-centric software.
 
-| Feature                  | Technology Stack                               | Purpose                                           |
-|--------------------------|------------------------------------------------|---------------------------------------------------|
-| Advanced RAG Chatbot     | LangChain, VectorDB, Gemini                    | Instant, multilingual citizen support             |
-| Smart Ticketing System   | Express.js, MongoDB, React, Multer             | Complaint/query management                        |
-| Legal Support Platform   | Express.js, MongoDB, Mongoose (ODM), React     | Lawyer connection and guidance                    |
-| Analytics Dashboard      | Express.js, MongoDB, React, Chart.js/Recharts  | AI-driven insights for authorities                |
+## 📫 Contact
 
-### Impact
-
-- **Reduces corruption** by promoting transparency and direct citizen engagement.
-- **Saves time and money** for both citizens and government officials.
-- **Boosts efficiency and trust** in government services.
-- **Creates a feedback loop** that continuously improves governance.
-
-### Our Team
-
-- Aditya Somani – The AI Engineer of the Team who was responsible for creating the Advance RAG chatbot and data extraction pipeline on it
-- Annepu Pawan Kumar + Atul Khiyani – The Full stack developer duo of team responsible for crafting the entire website from scratch , building the entire logic and software with user centric approach.
-
-### Contact
-
-For queries or collaboration, reach out to any team member above. 
-Contact us at - **nyayasetportal@gmail.com**
- 
-  ![image](https://github.com/user-attachments/assets/863774d2-d43a-4502-bd9a-bf7826b66fcc)
-
+For inquiries or collaboration, please reach out to us.
+*   **Email(Yes, it is real!)**: [nyayasetportal@gmail.com](mailto:nyayasetportal@gmail.com)
 
 > **Nyayasetu turns every citizen interaction into actionable intelligence, paving the way for transparent, efficient, and citizen-centric governance.**
