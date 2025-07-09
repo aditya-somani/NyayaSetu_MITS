@@ -5,9 +5,11 @@ import Call from '../models/calls.models.js'
 const intiate_call=async(req,res)=>{
     try {
         const {lawyerId}=req.params
+        console.log(lawyerId);
         
         
         const user_ID=req.userId
+          console.log("User  ",user_ID);
           
 
         const newCall=await Call.create({

@@ -10,10 +10,11 @@ const createTicket = async (req, res) => {
        
         console.log(req.body);
          
-        if(req.userId=='anonymous'){ 
-            userType='anonymous',
-            owner="64b7f294f1a2c1aaf0c2e76b"
-        }
+       if (req.userId === 'anonymous') {
+        var userType = 'anonymous';
+        var owner = '64b7f294f1a2c1aaf0c2e76b';
+    }
+
 
         
         const {
@@ -27,7 +28,7 @@ const createTicket = async (req, res) => {
         } = req.body;
 
         const sentiment=await allocatePriority(description)
-        const priority=sentiment.reason.split(" ")[3]
+        const priority=sentiment?.reason.split(" ")[3]
         const ticketData = {
             title,
             description,
@@ -42,7 +43,7 @@ const createTicket = async (req, res) => {
 
         const ticket = new Ticket(ticketData);
         await ticket.save();
-        console.log("Ticket Created Success fully");
+        console.log("Ticket Created Successfully");
         
         if(req.userId!='anonymous'){
         const user = await User.findById(userId).select('name email');

@@ -5,6 +5,8 @@ export const userMiddleware = (req, res, next) => {
     // Token extractor
     const getTokenFromRequest = (req) => {
       const cookieToken = req.cookies?.accessToken;
+      console.log(cookieToken);
+      
       const authHeader = req.headers?.authorization;
       const bearerToken = authHeader?.startsWith("Bearer ")
         ? authHeader.split(" ")[1]
@@ -21,7 +23,7 @@ export const userMiddleware = (req, res, next) => {
     if (!token) {
       req.userId="anonymous"
       // return res.status(401).json({ message: "Access token missing anonymous user" });
-      next()
+      return next()
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_USER);
@@ -31,7 +33,7 @@ export const userMiddleware = (req, res, next) => {
     }
 
     req.userId = decoded._id;
-    next();
+    return next();
   } catch (error) {
     return res.status(401).json({
       message: "Unauthorized",

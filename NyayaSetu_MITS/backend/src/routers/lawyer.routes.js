@@ -17,7 +17,7 @@ router.route('/register').post(
     router.route('/get-call-history').get(lawyerMiddleware,getCallHistory)
 
     
-    router.route('/get-lawyers').get(allLawyers)
+    router.route('/allLawyers').get(allLawyers)
 
 
 

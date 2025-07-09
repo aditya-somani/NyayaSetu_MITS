@@ -186,8 +186,7 @@ const getCallHistory=async(req,res)=>{ //get the calls details -> update to get 
 
 const allLawyers=async(req,res)=>{
   try {
-    const lawyers=await Lawyer.find({}).select('-password -refreshToken -ID_proof -totalConnects');
-    
+    const lawyers=await Lawyer.find({});
     return res.status(200).json(lawyers)
   } catch (error) {
     return res.status(400).json({
