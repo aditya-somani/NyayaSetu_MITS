@@ -9,22 +9,29 @@
 Clone the full repo: https://github.com/aditya-somani/NyayaSetu_MITS.git
                      cd NyayaSetu
 
-
 cd backend
-npm install 
-cp .env.example .env  
-# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)  
+
+npm install
+
+cp .env.example .env
+# Fill in your backend .env with:
+# PORT=8080
+# MONGO_URI=your_mongo_connection_string
+# JWT_SECRET=your_jwt_secret
+
 npm start
 
-
 cd ../frontend/nyaya-setu-connect
+
 npm install
+
 cp .env.example .env
 # Fill in your frontend .env
 # Example:
 # VITE_API_BASE_URL=http://localhost:8080
 
 npm run dev
+
 
 
 ## 🎥 Demos & Presentation
