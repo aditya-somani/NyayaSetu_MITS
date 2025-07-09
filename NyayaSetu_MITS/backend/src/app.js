@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-  origin: "https://nyayasetu-mits-1.onrender.com/", // ✅ your frontend URL
+  origin: "*", // ✅ your frontend URL
   credentials: true,               // ✅ important!
 }));
 app.use(express.static('public'))

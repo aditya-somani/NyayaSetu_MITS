@@ -98,8 +98,11 @@ const handleInstaConnect = () => {
   useEffect(() => {
     const getData = async () => {
       console.log('API base URL:', import.meta.env.VITE_API_BASE_URL);
+      console.log(`${import.meta.env.VITE_API_BASE_URL}/lawyer/allLawyers`);
 
       try {
+        
+        
         const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/lawyer/allLawyers`, {
   withCredentials: true
 });
