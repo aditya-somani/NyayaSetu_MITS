@@ -2,28 +2,14 @@
 
 *Nyayasetu is a comprehensive data platform designed to transform governance in India by turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policymaking.*
 
-**The Site is live at:** 
+
 
 **The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
 Clone the full repo: https://github.com/aditya-somani/NyayaSetu_MITS.git
                      cd NyayaSetu
 
-                     cd backend
-npm install \n
-cp .env.example .env  \n
-# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)  \n
-npm start
 
-
-cd ../frontend/nyaya-setu-connect
-npm install
-cp .env.example .env
-# Fill in your frontend .env
-# Example:
-# VITE_API_BASE_URL=http://localhost:8080
-
-npm run dev
 
 
 ## 🎥 Demos & Presentation
