@@ -51,7 +51,9 @@ const ticketSchema = new Schema({
         type:String,
         enum:["High","Medium","Low"],
         default:"Medium"
-
+    },
+    userType:{
+        type:String
     }
 
 }, {

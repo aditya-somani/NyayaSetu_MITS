@@ -19,7 +19,9 @@ export const userMiddleware = (req, res, next) => {
     console.log("Cookies:", req.cookies);
 
     if (!token) {
-      return res.status(401).json({ message: "Access token missing" });
+      req.userId="anonymous"
+      // return res.status(401).json({ message: "Access token missing anonymous user" });
+      next()
     }
 
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET_USER);

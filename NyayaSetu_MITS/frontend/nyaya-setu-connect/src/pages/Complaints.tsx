@@ -37,35 +37,7 @@ import { useToast } from '@/hooks/use-toast';
 
 
 const Complaints = () => {
-const navigate = useNavigate();
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = Cookies.get("accessToken"); // Read cookie
-    setIsAuthenticated(!!token); // Set true if exists
-  }, []);
-
-  if (!isAuthenticated) {
-    return (
-     <div className="flex flex-col items-center justify-center mt-20">
-  <div className="bg-red-50 border border-red-200 rounded-xl px-8 py-6 shadow-md flex flex-col items-center">
-    <svg className="w-10 h-10 text-red-500 mb-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01" />
-    </svg>
-    <h2 className="text-xl font-semibold text-red-700 mb-2">Please login to file a complaint.</h2>
-    <p className="text-red-600 text-sm">You must be signed in to access the complaint form.</p>
-     <button
-            onClick={() => navigate('/auth/user/login')}
-            className="mt-2 px-6 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
-          >
-            Sign In
-          </button>
-  </div>
-</div>
-    );
-  }
 
   
   const { toast } = useToast();
@@ -74,7 +46,6 @@ const navigate = useNavigate();
     title: '',
     description: '',
     category: '',
-    priority: '',
     city: '',
     state:'',
     contactNumber: '',
@@ -222,7 +193,6 @@ const navigate = useNavigate();
         title: '',
         description: '',
         category: '',
-        priority: '',
         city: '',
         state:'',
         contactNumber: '',
@@ -363,25 +333,6 @@ const navigate = useNavigate();
 
                     {/* Priority and Location Row */}
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="priority" className="text-sm font-medium text-gray-700 mb-2 block">
-                          Priority Level *
-                        </Label>
-                        <Select value={formData.priority} onValueChange={(value) => handleInputChange('priority', value)}>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select priority" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {priorities.map((priority) => (
-                              <SelectItem key={priority.value} value={priority.value}>
-                                <div className="flex items-center space-x-2">
-                                  <Badge className={priority.color}>{priority.label}</Badge>
-                                </div>
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
 
                       <div>
                       <Label htmlFor="city" className="text-sm font-medium text-gray-700 mb-2 block">

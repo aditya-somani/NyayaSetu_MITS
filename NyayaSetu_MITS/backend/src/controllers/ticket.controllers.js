@@ -1,11 +1,20 @@
 import Ticket from "../models/ticket.models.js";
 import User from "../models/user.models.js";
+import { allocatePriority } from "../utils/sentiment.js";
 // import  generateAndSendComplaintPDF  from "../utils/generateAndSendComplaintPDF.js";
 const createTicket = async (req, res) => {
     try {
+        
        const userId = req.userId
+       console.log(userId);
+       
         console.log(req.body);
          
+        if(req.userId=='anonymous'){ 
+            userType='anonymous',
+            owner="64b7f294f1a2c1aaf0c2e76b"
+        }
+
         
         const {
             title,
@@ -17,6 +26,8 @@ const createTicket = async (req, res) => {
             contactNumber
         } = req.body;
 
+        const sentiment=await allocatePriority(description)
+        const priority=sentiment.reason.split(" ")[3]
         const ticketData = {
             title,
             description,
@@ -24,20 +35,22 @@ const createTicket = async (req, res) => {
             contactNumber,
             location:{city,state},
             category,
-            owner: userId
+            priority,
+            userType,
+            owner:owner
         };
 
         const ticket = new Ticket(ticketData);
         await ticket.save();
         console.log("Ticket Created Success fully");
         
-
-        // const user = await User.findById(userId).select('name email');
-        
-        // await generateAndSendComplaintPDF(user, ticket);
+        if(req.userId!='anonymous'){
+        const user = await User.findById(userId).select('name email');
+        await generateAndSendComplaintPDF(user, ticket);
+        }
 
         return res.status(201).json({
-            message: "Ticket created successfully and PDF emailed.",
+            message: "Ticket created successfully and PDF emailed if loggedin.",
             ticket,
         });
     } catch (error) {
