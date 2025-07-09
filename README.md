@@ -6,6 +6,26 @@
 
 **The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
+Clone the full repo: 
+                     cd NyayaSetu
+
+                     cd backend
+npm install
+cp .env.example .env
+# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)
+npm start
+
+
+cd ../frontend/nyaya-setu-connect
+npm install
+cp .env.example .env
+# Fill in your frontend .env
+# Example:
+# VITE_API_BASE_URL=http://localhost:5000
+
+npm run dev
+
+
 ## 🎥 Demos & Presentation
 
 -**Video Link to Site Demo(Drive):** [**View the Video**](https://drive.google.com/file/d/1jEuOTqCWiImJmlteXNLpUxf72UzySgkQ/view?usp=sharing)
