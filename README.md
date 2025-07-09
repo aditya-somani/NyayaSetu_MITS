@@ -6,13 +6,13 @@
 
 **The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
-Clone the full repo: 
+Clone the full repo: https://github.com/aditya-somani/NyayaSetu_MITS.git
                      cd NyayaSetu
 
                      cd backend
-npm install
-cp .env.example .env
-# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)
+npm install \n
+cp .env.example .env  \n
+# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)  \n
 npm start
 
 
@@ -21,7 +21,7 @@ npm install
 cp .env.example .env
 # Fill in your frontend .env
 # Example:
-# VITE_API_BASE_URL=http://localhost:5000
+# VITE_API_BASE_URL=http://localhost:8080
 
 npm run dev
 
