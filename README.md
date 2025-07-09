@@ -6,7 +6,7 @@
 
 **The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
-(See the [Getting Started](#-getting-started) to run it locally)
+(See the Getting Started to run it locally from the Table of Contents)
 
 
 ## 🎥 Demos & Presentation
