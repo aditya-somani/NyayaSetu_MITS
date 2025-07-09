@@ -10,6 +10,21 @@ Clone the full repo: https://github.com/aditya-somani/NyayaSetu_MITS.git
                      cd NyayaSetu
 
 
+cd backend
+npm install 
+cp .env.example .env  
+# Fill in your backend .env (PORT, MONGO_URI, JWT_SECRET, etc.)  
+npm start
+
+
+cd ../frontend/nyaya-setu-connect
+npm install
+cp .env.example .env
+# Fill in your frontend .env
+# Example:
+# VITE_API_BASE_URL=http://localhost:8080
+
+npm run dev
 
 
 ## 🎥 Demos & Presentation
