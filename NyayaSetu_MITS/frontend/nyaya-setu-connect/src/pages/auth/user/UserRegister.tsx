@@ -49,7 +49,12 @@ const UserRegister = () => {
 const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
   try {
-    const result = await axios.post('http://localhost:5000/user/register', formData,{withCredentials:true});
+    const result = await axios.post(
+  `${import.meta.env.VITE_API_BASE_URL}/user/register`,
+  formData,
+  { withCredentials: true }
+);
+
     if (result.status === 201 || result.status === 200) {
       console.log('User registration:', formData);
       toast({

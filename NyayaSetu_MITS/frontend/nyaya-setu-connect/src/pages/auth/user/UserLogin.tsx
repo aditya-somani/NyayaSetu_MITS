@@ -24,7 +24,12 @@ const UserLogin = () => {
    const navigate = useNavigate();
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    const result=await axios.post('http://localhost:5000/user/login',formData,{withCredentials:true})
+    const result=await axios.post(
+  `${import.meta.env.VITE_API_BASE_URL}/user/login`,
+  formData,
+  { withCredentials: true }
+);
+
     console.log('User login:', formData);
     navigate('/')
     toast({

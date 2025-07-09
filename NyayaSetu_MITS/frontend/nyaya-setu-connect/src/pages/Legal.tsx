@@ -35,9 +35,10 @@ const Legal = () => {
   useEffect(() => {
   const checkAuth = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/auth/check", {
-        withCredentials: true // ✅ very important for sending cookies
-      });
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/check`, {
+  withCredentials: true
+});
+
       console.log("User is authenticated:", res.data);
       setIsAuthenticated(true);
     } catch (err) {
@@ -96,8 +97,13 @@ const handleInstaConnect = () => {
 
   useEffect(() => {
     const getData = async () => {
+      console.log('API base URL:', import.meta.env.VITE_API_BASE_URL);
+
       try {
-        const response = await axios.get('http://localhost:5000/lawyer/allLawyers',{withCredentials:true});
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/lawyer/allLawyers`, {
+  withCredentials: true
+});
+
         setLawyers(response.data);  // ✅ store data in state
       } catch (error) {
         console.error("Error fetching lawyer data:", error);
@@ -110,7 +116,10 @@ const handleInstaConnect = () => {
 
   const handleBookConsultation = async (lawyer: any) => {
     if(Authenticate){
-    const result =await axios.get(`http://localhost:5000/call/initiateCall/${lawyer._id}`,{withCredentials:true})
+    const result =await axios.get(`${import.meta.env.VITE_API_BASE_URL}/call/initiateCall/${lawyer._id}`, {
+  withCredentials: true
+});
+
     console.log(result);
      setSelectedLawyer(lawyer);
     setIsPaymentOpen(true);

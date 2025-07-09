@@ -43,9 +43,10 @@ const Complaints = () => {
   useEffect(() => {
   const checkAuth = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/auth/check", {
-        withCredentials: true // ✅ very important for sending cookies
-      });
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/auth/check`, {
+  withCredentials: true
+});
+
       console.log("User is authenticated:", res.data);
       setIsAuthenticated(true);
     } catch (err) {
@@ -68,7 +69,8 @@ const Complaints = () => {
     setTrackResult(null);
     setTrackLoading(true);
     try {
-      const res = await axios.get(`http://localhost:5000/ticket/track/${trackNo}`);    
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/ticket/track/${trackNo}`);
+    
       setTrackResult(res.data[0]);
     } catch (err) {
       setTrackError("Complaint not found. Please check the number and try again.");
@@ -204,7 +206,12 @@ const Complaints = () => {
       // Simulate API call
       console.log("DATA");
       const complaintdetail=Math.random().toString(36).substr(2, 6).toUpperCase()
-      await axios.post('http://localhost:5000/ticket/create',{formData,complaintdetail},{withCredentials:true})
+      await axios.post(
+  `${import.meta.env.VITE_API_BASE_URL}/ticket/create`,
+  { formData, complaintdetail },
+  { withCredentials: true }
+);
+
       toast({
         title: "Complaint Submitted Successfully!",
         description: "Your complaint has been registered. Tracking ID: " + complaintdetail,
