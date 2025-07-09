@@ -2,36 +2,11 @@
 
 *Nyayasetu is a comprehensive data platform designed to transform governance in India by turning routine citizen interactions into actionable insights for predictive analytics and evidence-based policymaking.*
 
-
+**The Site is live at:** - **https://nyayasetu-mits-1.onrender.com/**
 
 **The bot is live at:** [**Hugging Face Spaces**](https://huggingface.co/spaces/AdiSomani123/NyayaSetu_MITS)
 
-Clone the full repo: https://github.com/aditya-somani/NyayaSetu_MITS.git
-                     cd NyayaSetu
-
-cd backend
-
-npm install
-
-cp .env.example .env
-# Fill in your backend .env with:
-# PORT=8080
-# MONGO_URI=your_mongo_connection_string
-# JWT_SECRET=your_jwt_secret
-
-npm start
-
-cd ../frontend/nyaya-setu-connect
-
-npm install
-
-cp .env.example .env
-# Fill in your frontend .env
-# Example:
-# VITE_API_BASE_URL=http://localhost:8080
-
-npm run dev
-
+(See the [Getting Started](#-getting-started) to run it locally)
 
 
 ## 🎥 Demos & Presentation
@@ -110,47 +85,69 @@ Nyayasetu creates India's first **integrated legal ecosystem** that transforms e
 | **AI & ML** | LangChain, VectorDB, Gemini |
 | **File Storage**| Multer |
 
-## 🛠️ Getting Started
+## Getting Started
 
 Follow these steps to get a local copy up and running.
 
-### Prerequisites
-*   [Node.js](https://nodejs.org/) (LTS version recommended)
-*   `npm` (comes with Node.js)
-*   `git`
+Certainly! Here's a clean, well-formatted section you can include in your README file to guide users on running your project:
 
-### Installation
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/Atulkhiyani0909/NyayaSetu.git
-    cd NyayaSetu
-    ```
-2.  **Install Backend Dependencies:**
-    ```sh
-    cd backend
-    npm install
-    ```
-3.  **Install Frontend Dependencies:**
-    ```sh
-    cd ../frontend
-    npm install
-    ```
-4.  **Set up Environment Variables:**
-    *   In both the `frontend` and `backend` directories, rename `.env.example` to `.env`.
-    *   Fill in the required environment variables as described in the files.
-5.  **Run the Development Servers:**
-    *   **Backend**: In the `/backend` directory, run:
-        ```sh
-        npm run dev
-        ```
-        The backend server will typically start on `http://localhost:8080`.
-    *   **Frontend**: In the `/frontend` directory, run:
-        ```sh
-        npm run dev
-        ```
-        The Vite development server will start, usually at `http://localhost:5173`.
-6.  **Access the Application:**
-    Open your browser and navigate to the frontend URL (e.g., `http://localhost:5173`) to use the platform.
+## 🚀 Running the Project Locally
+
+Follow these steps to set up and run both the backend and frontend servers.
+
+**Clone the full repo:** 
+```bash
+https://github.com/aditya-somani/NyayaSetu_MITS.git
+```
+
+**Then move to**: 
+```bash
+cd NyayaSetu
+```
+
+**Then follow the following steps:**
+
+### 1. Backend Setup
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+```
+
+> **Configure your backend `.env` file** with the following variables:
+
+```env
+PORT=8080
+MONGO_URI=your_mongo_connection_string
+JWT_SECRET=your_jwt_secret
+```
+
+Start the backend server:
+
+```bash
+npm start
+```
+
+### 2. Frontend Setup
+
+```bash
+cd ../frontend/nyaya-setu-connect
+npm install
+cp .env.example .env
+```
+
+> **Configure your frontend `.env` file** with the following example:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080
+```
+
+Start the frontend development server:
+
+```bash
+npm run dev
+```
 
 ## 📈 Impact
 
