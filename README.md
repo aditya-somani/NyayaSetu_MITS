@@ -89,8 +89,6 @@ Nyayasetu creates India's first **integrated legal ecosystem** that transforms e
 
 Follow these steps to get a local copy up and running.
 
-Certainly! Here's a clean, well-formatted section you can include in your README file to guide users on running your project:
-
 ## 🚀 Running the Project Locally
 
 Follow these steps to set up and run both the backend and frontend servers.
