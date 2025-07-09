@@ -15,8 +15,8 @@ MONGO_URL=os.getenv('MONGO_URL')
 
 """## Importing Libraries"""
 
-from typing import List, Dict ,Literal
-from datetime import datetime
+import os
+from typing import List, Dict
 
 # Core ML and RAG Libraries
 from langchain_core.prompts import ChatPromptTemplate
@@ -30,6 +30,8 @@ from functools import lru_cache
 from langchain.load import dumps,loads
 import pymongo
 from pymongo import MongoClient
+from datetime import datetime
+from typing import Literal
 
 def create_memory():
     return {"history": []}  # Simple dictionary-based memory
@@ -58,9 +60,10 @@ def query_to_english(query:str,memory) -> dict:
 
     # history_context = memory.get("history", []) if isinstance(memory, dict) else []
 
-    prompt = """Translate the following query to clear English while preserving its context and intent you may imporve its wordings for better understanding.
+    prompt = """Translate the following query to clear English while preserving its context and intent.
     If the query is ambiguous, you can rephrase it, but do not change its original meaning utilize this Chat history to rewrite
-    this ambigous query : {memory}
+    this ambigous query and include all important things from memory which can be useful like location , problem etc. Make sure the rewritten
+    prompt holds the cumulative meaning and value of full combined memory - this is must , here is the memory : {memory}
 
     Query: {query}
 
@@ -68,6 +71,13 @@ def query_to_english(query:str,memory) -> dict:
 
     Output should strictly follow this format:
     {example}
+
+    -Under no condition you are allowed to alter or correct words with entire different meaning , if the user has entered proper nouns or imp details then make sure to include it in rewriting the prompt
+
+    ex:- User : MP,gwalior  , water issue
+    rewritten : User has water issues in MP,gwalior location.
+
+    So be sensible and do not completely rewrite the prompt , I forbade you to drop essential details.
     """
 
     llm3 = get_llm().with_structured_output(language_detector)
@@ -105,6 +115,7 @@ As a legal assistant for NyayaSetu,utilize memory for deciding -- only return `T
     3. Query is a greeting or simple request
     4. User has already been asked for clarification but he choose not to based on Chat History.
     5. He asks for services we offer or other things related to website or bot.
+    6. He explicitly just asks for an answer or 2-3 clarifying questions has been asked from him already based on Chat History.
 
     **Query Examples:**
     Ambiguous: "What happens if I have a problem with railway staff?"
@@ -142,8 +153,6 @@ As a legal assistant for NyayaSetu,utilize memory for deciding -- only return `T
     chain = template | llm
     return chain.invoke({'query': query}).model_dump()['talkback']
 
-"""## Talkback message"""
-
 def talkback(query: str,memory,language: str) -> str:
 
     # history_context = memory.get("history", []) if isinstance(memory, dict) else []
@@ -158,7 +167,7 @@ def talkback(query: str,memory,language: str) -> str:
     - Use the chat history to understand the context and determine what information has already been provided.
     - Your task is to ask a single, logical follow-up question to clarify the user's intent or gather missing details.
     - Keep the follow-up question concise, polite, and relevant to the query.
-    - You may ask multiple things or details in the same question so as to not irritate the user again and again.
+    - You may ask 2 things or details in the same question so as to not irritate the user again and again.
 
     ## Chat History:
     {chat_history}
@@ -186,11 +195,6 @@ def talkback(query: str,memory,language: str) -> str:
 
     chain = template | llm | StrOutputParser()
     return chain.invoke({'query': query})
-
-"""## RAG
-
-### Retriever
-"""
 
 index_name = 'nyayasetu'
 pc = Pinecone()
@@ -299,8 +303,6 @@ def extract_dept_category(query: str) -> dict:
     chain = prompt | llm.with_structured_output(DeptCategory)
     return chain.invoke({"query": query}).model_dump()
 
-"""### Generation"""
-
 def rag(query: str,memory,language:str):
 
     # Step 1: Extract department/category
@@ -313,7 +315,6 @@ def rag(query: str,memory,language:str):
     # Step 2: Update MongoDB counters - USING YOUR SCHEMA
     db = CounterDB()
     db.update_counter(dept_cat["department"], dept_cat["category"])
-
 
     query_prompt = '''
     You are a legal query optimization assistant.
@@ -351,7 +352,7 @@ def rag(query: str,memory,language:str):
     rag_docs = '\n'.join(str(doc) for doc in rag_docs_list) if rag_docs_list else "No relevant RAG documents found."
 
     prompt = '''
-You are NyayaSetu, one the best AI-powered legal assistant ,developed by Team Normally Distributed. Your primary role is to guide users through legal queries, government service issues, and complaint processes in India. You use advanced retrieval (RAG) technology to provide accurate, context-aware responses and always act with empathy and clarity.
+    You are NyayaSetu, one the best AI-powered legal assistant ,developed by Team Normally Distributed. Your primary role is to guide users through legal queries, government service issues, and complaint processes in India. You use advanced retrieval (RAG) technology to provide accurate, context-aware responses and always act with empathy and clarity.
 
 **Services you offer:**
 - **Complaint Management:** Help users submit and track complaints related to municipal services, public infrastructure, healthcare, education, transportation, public utilities, law enforcement, and more.
@@ -431,6 +432,3 @@ def chatbot_response(query:str,memory:list,language:str):
         return talkback(query,memory,language)
     else:
         return rag(query,memory,language)
-
-
-

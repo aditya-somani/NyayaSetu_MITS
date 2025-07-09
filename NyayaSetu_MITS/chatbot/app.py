@@ -1,10 +1,8 @@
-from chatbot import query_to_english , chatbot_response
+from Chatbot import query_to_english , chatbot_response , create_memory
 
 import gradio as gr
 
-# Initialize memory (can be replaced with LangChain memory if needed)
-def create_memory():
-    return {"history": []}  # Simple dictionary-based memory
+import gradio as gr
 
 def chatbot_interface(user_input, chat_history, session_state):
     if session_state.get("memory") is None:
