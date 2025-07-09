@@ -10,11 +10,20 @@ Of course! Here is a rewritten and improved version of your README file, complet
 
 ## 🎥 Demos & Presentation
 
--**Video Link to Site Demo(Drive):** [**View the Video**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
+-**Video Link to Site Demo(Drive):** [**View the Video**](https://drive.google.com/file/d/1jEuOTqCWiImJmlteXNLpUxf72UzySgkQ/view?usp=sharing)
 
--**Video Link to Bot Mockup(Drive)** [**View the Video**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
+-**Video Link to Bot Mockup(Drive)** [**View the Video**](https://drive.google.com/file/d/1TW_xBQuy6w05b6iSuR_WZElSlqthhgJP/view?usp=sharing)
 
 -**Check out our presentation(Slides):** [**View the Slides**](https://docs.google.com/presentation/d/1BEnP3tiO8Sus9Y6A-NXrCugVpa1eEUGLiAyoeOA1qMw/edit?usp=sharing)
+
+**Flow Chart of Advance RAG based ChatBot:**
+
+<p align="center">
+  <a href="https://drive.google.com/uc?export=view&id=1qyX74qsKfmrhkNBtY_ERYByv_d1aC0XR">
+    <img src="https://drive.google.com/uc?export=view&id=1qyX74qsKfmrhkNBtY_ERYByv_d1aC0XR" alt="Architecture" width="600">
+  </a>
+</p>
+
 
 ## 📜 Table of Contents
 
@@ -127,7 +136,7 @@ Follow these steps to get a local copy up and running.
 ## 🤝 Our Team
 
 *   **Aditya Somani** – AI Engineer | Developed the Advanced RAG chatbot and data extraction pipeline.
-*   **Annepu Pawan Kumar** & **Atul Khiyani** – Full-Stack Developers | Crafted the entire website, backend logic, and user-centric software.
+*   **Annepu Pawan Kumar** , **Atul Khiyani** & **Sumit Thakur** – Full-Stack Developers | Crafted the entire website, backend logic, and user-centric software.
 
 ## 📫 Contact
 
